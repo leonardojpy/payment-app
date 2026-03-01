@@ -1,8 +1,8 @@
 package com.leonardojpy.pagamentos.config;
 
-import com.leonardojpy.pagamentos.entity.WalletType;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
+import com.leonardojpy.pagamentos.entity.WalletType;
 import com.leonardojpy.pagamentos.repository.WalletTypeRepository;
 
 import java.util.Arrays;
