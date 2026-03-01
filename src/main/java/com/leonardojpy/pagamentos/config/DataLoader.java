@@ -22,3 +22,5 @@ public class DataLoader implements CommandLineRunner {
                 .forEach(walletType -> walletTypeRepository.save(walletType.get()));
     }
 }
+
+
