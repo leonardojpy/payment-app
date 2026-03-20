@@ -9,6 +9,7 @@ import com.leonardojpy.pagamentos.repository.WalletTypeRepository;
 import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.Proxy;
+import java.math.BigDecimal;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -30,7 +31,7 @@ class WalletServiceTests {
         var walletTypeRepository = proxy(WalletTypeRepository.class, (methodName, args) -> Optional.empty());
 
         var service = new WalletService(walletRepository, walletTypeRepository);
-        var dto = new CreateWalletDto("Leonardo", "12345678900", "leo@email.com", "123456", WalletType.Enum.USER);
+        var dto = new CreateWalletDto("Leonardo", "12345678900", "leo@email.com", "123456", WalletType.Enum.USER, BigDecimal.TEN);
 
         assertThrows(WalletDataAlreadyExistsException.class, () -> service.createWallet(dto));
     }
@@ -61,13 +62,14 @@ class WalletServiceTests {
         });
 
         var service = new WalletService(walletRepository, walletTypeRepository);
-        var dto = new CreateWalletDto("Leonardo", "12345678900", "leo@email.com", "123456", WalletType.Enum.USER);
+        var dto = new CreateWalletDto("Leonardo", "12345678900", "leo@email.com", "123456", WalletType.Enum.USER, BigDecimal.TEN);
 
         var wallet = service.createWallet(dto);
 
         assertEquals(10L, wallet.getId());
         assertSame(managedWalletType, wallet.getWalletType());
         assertSame(savedWallet.get(), wallet);
+        assertEquals(BigDecimal.TEN, wallet.getBalance());
     }
 
     @SuppressWarnings("unchecked")
