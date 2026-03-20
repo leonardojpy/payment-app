@@ -8,14 +8,18 @@ public class WalletType {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+
+    @Column(name = "id", unique = true)
     private Long id;
 
+    @Column(unique = true, nullable = false)
     private String description;
 
     public WalletType(){
     }
 
-    public WalletType(String description) {
+    public WalletType(Long id, String description) {
+        this.id = id;
         this.description = description;
     }
 
@@ -37,17 +41,27 @@ public class WalletType {
 
     public enum Enum {
 
-        USER("user"),
-        MERCHANT("merchant");
+        USER(1L, "user"),
+        MERCHANT(2L, "merchant");
 
+        private Long id;
         private String description;
 
-        Enum(String description) {
+        Enum(Long id, String description) {
+            this.id = id;
             this.description = description;
         }
 
+        public Long getId() {
+            return id;
+        }
+
+        public String getDescription() {
+            return description;
+        }
+
         public WalletType get(){
-            return new WalletType(description);
+            return new WalletType(id, description);
         }
     }
 }

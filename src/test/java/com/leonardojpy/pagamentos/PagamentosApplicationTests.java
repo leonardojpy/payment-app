@@ -1,13 +1,13 @@
 package com.leonardojpy.pagamentos;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+
 class PagamentosApplicationTests {
 
-	@Test
-	void contextLoads() {
-	}
-
+    @Test
+    void applicationClassShouldBeInstantiable() {
+        assertDoesNotThrow(PagamentosApplication::new);
+    }
 }
