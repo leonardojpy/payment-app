@@ -8,6 +8,8 @@ import com.leonardojpy.pagamentos.exception.WalletNotFoundException;
 import com.leonardojpy.pagamentos.repository.TransactionRepository;
 import com.leonardojpy.pagamentos.repository.WalletRepository;
 import jakarta.transaction.Transactional;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -15,6 +17,8 @@ import java.util.List;
 
 @Service
 public class TransactionService {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(TransactionService.class);
 
     private final WalletRepository walletRepository;
     private final TransactionRepository transactionRepository;
@@ -67,7 +71,11 @@ public class TransactionService {
                 new Transaction(payer, payee, dto.value(), Transaction.Status.AUTHORIZED)
         );
 
-        notificationService.notify(transaction);
+        try {
+            notificationService.notify(transaction);
+        } catch (RuntimeException e) {
+            LOGGER.warn("Falha ao notificar transacao {}", transaction.getId(), e);
+        }
 
         return transaction;
     }

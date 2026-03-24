@@ -93,6 +93,31 @@ class TransactionServiceTests {
         assertEquals(savedTransaction.get(), notificationTransaction.get());
     }
 
+    @Test
+    void shouldKeepTransactionSuccessfulWhenNotificationFails() {
+        var payer = wallet(1L, WalletType.Enum.USER, "100.00");
+        var payee = wallet(2L, WalletType.Enum.USER, "25.00");
+
+        var walletRepository = walletRepository(Map.of(1L, payer, 2L, payee));
+        var transactionRepository = transactionRepository();
+
+        var service = new TransactionService(
+                walletRepository,
+                transactionRepository,
+                (from, to, value) -> {
+                },
+                transaction -> {
+                    throw new RuntimeException("notification down");
+                }
+        );
+
+        var transaction = service.createTransaction(new CreateTransactionDto(1L, 2L, new BigDecimal("15.00")));
+
+        assertEquals(Transaction.Status.AUTHORIZED, transaction.getStatus());
+        assertEquals(new BigDecimal("85.00"), payer.getBalance());
+        assertEquals(new BigDecimal("40.00"), payee.getBalance());
+    }
+
     @SuppressWarnings("unchecked")
     private static WalletRepository walletRepository(Map<Long, Wallet> wallets) {
         return (WalletRepository) Proxy.newProxyInstance(
