@@ -8,5 +8,5 @@ import java.util.Optional;
 public interface WalletTypeRepository extends JpaRepository<WalletType, Long> {
     boolean existsByDescription(String description);
 
-    Optional<WalletType> findByDescription(String description);
+    Optional<WalletType> findFirstByDescriptionOrderByIdAsc(String description);
 }

@@ -55,7 +55,7 @@ class WalletServiceTests {
         });
 
         var walletTypeRepository = proxy(WalletTypeRepository.class, (methodName, args) -> {
-            if ("findByDescription".equals(methodName)) {
+            if ("findFirstByDescriptionOrderByIdAsc".equals(methodName)) {
                 return Optional.of(managedWalletType);
             }
             return defaultValue(methodName);

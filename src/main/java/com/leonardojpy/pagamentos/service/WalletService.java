@@ -33,7 +33,7 @@ public class WalletService {
             throw new WalletDataAlreadyExistsException("CpfCnpj or email already exists");
         }
 
-        var walletType = walletTypeRepository.findByDescription(dto.walletType().getDescription())
+        var walletType = walletTypeRepository.findFirstByDescriptionOrderByIdAsc(dto.walletType().getDescription())
                 .orElseThrow(() -> new WalletTypeNotFoundException("Wallet type " + dto.walletType().name() + " does not exist"));
 
         return walletRepository.save(dto.toWallet(walletType));
