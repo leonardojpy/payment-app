@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pagamentos</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<div class="page">
+    <header class="hero">
+        <div>
+            <p class="eyebrow">Painel de Teste</p>
+            <h1>Carteiras e transferencias em um so lugar</h1>
+            <p class="hero-copy">
+                Interface simples para cadastrar carteiras, acompanhar saldos e testar o fluxo de transferencias do backend.
+            </p>
+        </div>
+
+        <section class="stats" aria-label="Resumo">
+            <article class="stat-card">
+                <span class="stat-label">Carteiras</span>
+                <strong id="wallet-count">0</strong>
+            </article>
+            <article class="stat-card">
+                <span class="stat-label">Transacoes</span>
+                <strong id="transaction-count">0</strong>
+            </article>
+            <article class="stat-card">
+                <span class="stat-label">Saldo total</span>
+                <strong id="total-balance">R$ 0,00</strong>
+            </article>
+        </section>
+    </header>
+
+    <main class="content">
+        <section class="panel">
+            <div class="panel-header">
+                <h2>Nova carteira</h2>
+                <p>Cadastre usuarios ou lojistas com saldo inicial para testar a API.</p>
+            </div>
+
+            <form id="wallet-form" class="form-grid">
+                <label>
+                    <span>Nome completo</span>
+                    <input type="text" name="fullName" placeholder="Maria da Silva" required>
+                </label>
+                <label>
+                    <span>CPF/CNPJ</span>
+                    <input type="text" name="cpfCnpj" placeholder="12345678900" required>
+                </label>
+                <label>
+                    <span>E-mail</span>
+                    <input type="email" name="email" placeholder="maria@email.com" required>
+                </label>
+                <label>
+                    <span>Senha</span>
+                    <input type="password" name="password" placeholder="Minimo de 6 caracteres" required>
+                </label>
+                <label>
+                    <span>Tipo da carteira</span>
+                    <select name="walletType" required>
+                        <option value="USER">USER</option>
+                        <option value="MERCHANT">MERCHANT</option>
+                    </select>
+                </label>
+                <label>
+                    <span>Saldo inicial</span>
+                    <input type="number" name="balance" step="0.01" min="0" placeholder="100.00" required>
+                </label>
+
+                <div class="form-actions">
+                    <button type="submit">Criar carteira</button>
+                </div>
+            </form>
+        </section>
+
+        <section class="panel">
+            <div class="panel-header">
+                <h2>Nova transferencia</h2>
+                <p>Selecione as carteiras ja cadastradas e envie um valor.</p>
+            </div>
+
+            <form id="transaction-form" class="form-grid">
+                <label>
+                    <span>Pagador</span>
+                    <select name="payer" id="payer-select" required></select>
+                </label>
+                <label>
+                    <span>Recebedor</span>
+                    <select name="payee" id="payee-select" required></select>
+                </label>
+                <label>
+                    <span>Valor</span>
+                    <input type="number" name="value" step="0.01" min="0.01" placeholder="10.00" required>
+                </label>
+
+                <div class="form-actions">
+                    <button type="submit">Transferir</button>
+                </div>
+            </form>
+        </section>
+
+        <section class="feedback-stack" aria-live="polite">
+            <div id="success-message" class="feedback success hidden"></div>
+            <div id="error-message" class="feedback error hidden"></div>
+        </section>
+
+        <section class="data-grid">
+            <article class="panel data-panel">
+                <div class="panel-header row">
+                    <div>
+                        <h2>Carteiras cadastradas</h2>
+                        <p>Lista atualizada automaticamente apos cada acao.</p>
+                    </div>
+                    <button id="refresh-wallets" class="ghost-button" type="button">Atualizar</button>
+                </div>
+
+                <div id="wallet-list" class="list"></div>
+            </article>
+
+            <article class="panel data-panel">
+                <div class="panel-header row">
+                    <div>
+                        <h2>Historico de transacoes</h2>
+                        <p>Visualizacao das transferencias autorizadas.</p>
+                    </div>
+                    <button id="refresh-transactions" class="ghost-button" type="button">Atualizar</button>
+                </div>
+
+                <div id="transaction-list" class="list"></div>
+            </article>
+        </section>
+    </main>
+</div>
+
+<script src="/app.js" defer></script>
+</body>
+</html>
