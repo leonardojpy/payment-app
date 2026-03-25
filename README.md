@@ -103,7 +103,30 @@ Isso sobe um MySQL com:
 - usuario: `admin`
 - senha: `123`
 
-### 3. Configurar o Java no PowerShell
+### 3. Variaveis de ambiente
+
+O projeto aceita configuracao por variaveis de ambiente, mas possui valores padrao para facilitar a execucao local.
+
+Variaveis suportadas:
+- `MYSQL_HOST`
+- `MYSQL_DATABASE`
+- `MYSQL_USER`
+- `MYSQL_PASSWORD`
+- `AUTHORIZATION_URL`
+- `NOTIFICATION_URL`
+
+Exemplo no PowerShell:
+
+```powershell
+$env:MYSQL_HOST="localhost"
+$env:MYSQL_DATABASE="picpaydb"
+$env:MYSQL_USER="admin"
+$env:MYSQL_PASSWORD="123"
+$env:AUTHORIZATION_URL="https://util.devi.tools/api/v2"
+$env:NOTIFICATION_URL="https://util.devi.tools/api/v1"
+```
+
+### 4. Configurar o Java no PowerShell
 
 Se necessario, configure a sessao com:
 
@@ -116,7 +139,7 @@ Importante:
 - `JAVA_HOME` deve apontar para a raiz do JDK
 - nao deve apontar para a pasta `bin`
 
-### 4. Rodar a aplicacao
+### 5. Rodar a aplicacao
 
 Na raiz do projeto:
 
@@ -130,7 +153,7 @@ Se estiver usando o Maven instalado na maquina:
 mvn spring-boot:run
 ```
 
-### 5. Acessar a interface
+### 6. Acessar a interface
 
 Abra no navegador:
 
@@ -202,6 +225,8 @@ A aplicacao utiliza servicos externos configurados em:
 Propriedades relevantes:
 - `clients.authorization.url`
 - `clients.notification.url`
+
+Obs.: como o projeto usa placeholders com valores padrao, ele continua simples de executar localmente, mas fica mais seguro e flexivel para publicacao no GitHub ou deploy em outros ambientes.
 
 ## Melhorias futuras
 
