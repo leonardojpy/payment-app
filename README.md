@@ -239,4 +239,4 @@ Obs.: como o projeto usa placeholders com valores padrao, ele continua simples d
 
 ## Autor
 
-Projeto desenvolvido como estudo e teste tecnico por Leonardo, com suporte de implementacao e refinamento durante a construcao.
+@leonardojpy no github.
